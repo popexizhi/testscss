@@ -1,0 +1,69 @@
+header:
+
+POST /api/user/trial HTTP/1.1
+Host: 192.168.1.16:8080
+Connection: keep-alive
+Content-Length: 106
+Accept: application/json, text/javascript, */*; q=0.01
+Origin: http://www.qa1.senlime.com
+X-Requested-With: XMLHttpRequest
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.154 Safari/537.36 LBBROWSER
+Content-Type: application/json
+Referer: http://192.168.1.16:8080/request.html
+Accept-Encoding: gzip, deflate
+Accept-Language: zh-CN,zh;q=0.8
+
+body:
+{"email":"1","applicant_name":"1","company":"1","company_size":"1","company_url":"1","company_desc":"111"}
+
+-------------
+结果:
+db: trial_request add
+
+========================================
+审批用户添加
+
+
+========================================
+审批者登录
+head
+Host: 192.168.1.16:8080
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0
+Accept: application/json, text/plain, */*
+Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: application/json;charset=utf-8
+Pragma: no-cache
+Cache-Control: no-cache
+Referer: http://192.168.1.16:8080/api/operation/session
+Content-Length: 351
+Cookie: _5t_trace_sid=22fb3725cb1f62b8a322cdb4a2ab36d9; _5t_trace_tms=1
+Connection: keep-alive
+body
+{"user":{"email":"TestEmail_0000@account.com","password":"password"},"terminal_type":"browser","device":{"os":"Windows","version":"7","browser":"Firefox","browserVersion":"39.0","mobile":false,"screen":"1920 x 1200","model":"Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0","device_id":"cbf9b880-8e95-11e5-819d-53bdaa3b059c"}}
+登录成功后返回中有cookies
+------------------------------------
+访问http://192.168.1.16:8080/api/operation/trial/requests?page=1&size=10 获得列表
+
+审批成功
+http://192.168.1.16:8080/api/operation/approve_trial_request
+head 
+Host: 192.168.1.16:8080
+User-Agent: Mozilla/5.0 (Windows NT 6.1; WOW64; rv:39.0) Gecko/20100101 Firefox/39.0
+Accept: application/json, text/plain, */*
+Accept-Language: zh-CN,zh;q=0.8,en-US;q=0.5,en;q=0.3
+Accept-Encoding: gzip, deflate
+Content-Type: application/json;charset=utf-8
+Referer: http://192.168.1.16:8080/requests
+Content-Length: 13
+Connection: keep-alive
+Pragma: no-cache
+Cache-Control: no-cache
+body:
+{"email":"current@senlime.com"}
+
+--------------------------------------------------------------
+获得临时密码从 log/postman/0/postman.log 
+模板位置deploy/config/we/email_templates
+激活邀请码
+GET http://192.168.1.16:8080/api/user/activate
